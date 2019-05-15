@@ -1,0 +1,13 @@
+<html>
+<head>
+<script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+<script>
+angular.module("Tks", []).controller("TksCtrl", ["$scope","$location",function($scope,$location) {
+	$scope.orderID=/transID=(\S+)/.exec($location.absUrl())[1];
+}]);
+</script>
+</head>
+<body ng-app="Tks" ng-controller="TksCtrl">
+Thank you {{orderID}}
+</body>
+</html>
