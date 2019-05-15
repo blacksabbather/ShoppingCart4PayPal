@@ -63,13 +63,21 @@
 						$scope.Total=$scope.items.reduce(function(a,b){return (a.isChecked?a.price:0)*a.num+(b.isChecked?b.price:0)*b.num});
 					}
                 };
-				$scope.personal={firstname:'Minjie',lastname:'Wang',email:'jay_wong@me.com',phone:'18621695688',state:'CA',address:'2000 Shoreline Ct, Brisbane',zipcode:'94005'};
+				$scope.personal={firstname:'Minjie',lastname:'Wang',email:'jay_wong@me.com',phone:'18621695688',state:'CA',address:'2000 Shoreline Ct', city:'Brisbane',zipcode:'94005'};
 				Total=$scope.Total;
 				paypal.Buttons({
 					createOrder: function(data, actions) { //send the order
 						return fetch('/create-paypal-transaction', {
 							method: 'post',
-							body: JSON.stringify({value:$scope.Total}),
+							body: JSON.stringify({
+								value:$scope.Total,
+								firstname:$scope.personal.firstname,
+								lastname:$scope.personal.lastname,
+								state:$scope.personal.state,
+								city:$scope.personal.city,
+								address:$scope.personal.address,
+								zipcode:$scope.personal.zipcode,
+							}),
     						headers: {
       							'content-type': 'application/json'
     						}
@@ -214,6 +222,7 @@
 					</select>
 				</td></tr>
 			<tr><td>Address</td><td><input type="text" ng-model="personal.address"></td></tr>
+			<tr><td>City</td><td><input type="text" ng-model="personal.city"></td></tr>
 			<tr><td>Zip Code</td><td><input type="text" ng-model="personal.zipcode"></td></tr>
 		</table>
 		</div>
