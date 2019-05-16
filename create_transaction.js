@@ -8,8 +8,15 @@ module.exports =async function handleRequest(req, res) {
 			purchase_units: [{
 					amount: {
 							currency_code: 'USD',
-							value: req.body.value
+							value: req.body.value,
+							breakdown:{
+								item_total:{
+									currency_code: 'USD',
+									value: req.body.value,
+								}
+							},
 					},
+					items:req.body.items_checkout,
 					shipping:{
 						method: "United States Postal Service",
         				address: {

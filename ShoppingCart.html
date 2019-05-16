@@ -67,25 +67,44 @@
 				Total=$scope.Total;
 				paypal.Buttons({
 					createOrder: function(data, actions) { //send the order
-						return fetch('/create-paypal-transaction', {
-							method: 'post',
-							body: JSON.stringify({
-								value:$scope.Total,
-								firstname:$scope.personal.firstname,
-								lastname:$scope.personal.lastname,
-								state:$scope.personal.state,
-								city:$scope.personal.city,
-								address:$scope.personal.address,
-								zipcode:$scope.personal.zipcode,
-							}),
-    						headers: {
-      							'content-type': 'application/json'
-    						}
-  						}).then(function(res) {
-    						return res.json();
-  						}).then(function(data) {
-    						return data.orderID;
-  						});
+						$scope.items_checkout=[];
+						for(i=0;i<$scope.items.length;i++){
+							var current_item={};
+							if($scope.items[i].isChecked){
+								current_item.name=$scope.items[i].name;
+								current_item.unit_amount={};
+								current_item.unit_amount.currency_code='USD';
+								current_item.unit_amount.value=$scope.items[i].price;
+								current_item.quantity=$scope.items[i].num;
+								$scope.items_checkout.push(current_item);
+							}
+						}
+						if($scope.items_checkout.length>0){
+								return fetch('/create-paypal-transaction', {
+									method: 'post',
+									body: JSON.stringify({
+										value:$scope.Total,
+										firstname:$scope.personal.firstname,
+										lastname:$scope.personal.lastname,
+										state:$scope.personal.state,
+										city:$scope.personal.city,
+										address:$scope.personal.address,
+										zipcode:$scope.personal.zipcode,
+										items_checkout:$scope.items_checkout,
+									}),
+									headers: {
+										'content-type': 'application/json'
+									},
+								}).then(function(res) {
+									return res.json();
+								}).then(function(data) {
+									return data.orderID;
+								});
+						}
+						else{
+							alert('Please select at least one item');
+							return false;
+						}
 					},
 					onApprove: function(data, actions) {//capture the order and redirect to Thank you page
 						return actions.order.capture().then(function(details) {
