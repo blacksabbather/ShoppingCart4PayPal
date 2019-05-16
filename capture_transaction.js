@@ -7,11 +7,12 @@ module.exports = async function handleRequest(req, res) {
 		let capture
 		try {
 			capture = await payPalClient.client().execute(request);
+			console.log(capture.result)
 		} catch (err) {
 			console.error(err);
 			return res.send(500);
 		}
 		return res.status(200).json({
-			transID: capture.result.purchase_units[0].payments.captures[0].id // send the transaction id back
+			transID: capture.result.purchase_units[0].payments.captures[0].id
 		});
 }
