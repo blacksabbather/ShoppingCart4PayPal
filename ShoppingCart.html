@@ -63,6 +63,16 @@
 						$scope.Total=$scope.items.reduce(function(a,b){return (a.isChecked?a.price:0)*a.num+(b.isChecked?b.price:0)*b.num});
 					}
                 };
+				$scope.$watch('personal.phone',function(newVal, oldVal){
+					if(newVal != oldVal){
+						$scope.personal.phone=newVal.replace(/\D/g,'');
+					}
+				});
+				$scope.$watch('personal.zipcode',function(newVal, oldVal){
+					if(newVal != oldVal){
+						$scope.personal.zipcode=newVal.replace(/\D/g,'');
+					}
+				});
 				$scope.personal={firstname:'Minjie',lastname:'Wang',email:'jay_wong@me.com',phone:'18621695688',state:'CA',address:'2000 Shoreline Ct', city:'Brisbane',zipcode:'94005'};
 				Total=$scope.Total;
 				paypal.Buttons({
