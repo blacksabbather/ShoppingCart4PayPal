@@ -23,10 +23,16 @@
                         price: 8,
                         num: 1,
                         isChecked: true,
-                    }
+                    },
+					{
+                        name: 'Monitor',
+                        price: 15,
+                        num: 1,
+                        isChecked: true,
+                    },
 				];
 				$scope.items=arr;
-				$scope.Total=$scope.items.reduce(function(a,b){return (a.isChecked?a.price:0)*a.num+(b.isChecked?b.price:0)*b.num});
+				$scope.Total=$scope.items.reduce(function(sum,item){return sum+(item.isChecked?item.price:0)*item.num},0);
 				$scope.isAllSelected=($scope.items.length>0)?$scope.items.every(function(itm){ return itm.isChecked; }):false;
 				$scope.sub=function($index){
 					arr[$index].num -= 1;
@@ -60,7 +66,7 @@
 						$scope.Total=0;
 					}
 					else{
-						$scope.Total=$scope.items.reduce(function(a,b){return (a.isChecked?a.price:0)*a.num+(b.isChecked?b.price:0)*b.num});
+						$scope.Total=$scope.items.reduce(function(sum,item){return sum+(item.isChecked?item.price:0)*item.num},0);
 					}
                 };
 				$scope.$watch('personal.phone',function(newVal, oldVal){
