@@ -4,7 +4,7 @@ ShoppingCart.html is the main page </br>
 PayPalClient.js is the basic module </br>
 create_transaction.js and capture_transaction.js are the two functional modules </br>
 
-The deploy a website:
+The deploy a website:</br>
 0. Pick up a server with node.js/npm installed; run "npm install @paypal/checkout-server-sdk" 
 1. mkdir paypalclient && cd paypalclient
 2. download index.js, ShoppingCart.html, ThankYou.html
